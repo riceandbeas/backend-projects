@@ -1,4 +1,4 @@
-package main
+package task
 
 import (
 	"strings"
@@ -22,7 +22,9 @@ const (
 )
 
 func NewStatus(s string) Status {
-	switch strings.ToLower(s) {
+	formatted := strings.ToLower(s)
+	formatted = strings.Replace(formatted, "-", " ", -1)
+	switch formatted {
 	case "in progress":
 		return InProgress
 	case "done":
