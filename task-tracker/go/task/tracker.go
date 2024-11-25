@@ -192,11 +192,14 @@ func (t *Tracker) printTask(task Task) {
 		Width(40).
 		Height(2).
 		Underline(true).
-		Align(lipgloss.Center)
+		Align(lipgloss.Center).
+		Foreground(lipgloss.Color("212"))
 
 	border := lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
-		Align(lipgloss.Center)
+		Align(lipgloss.Center).
+		BorderForeground(lipgloss.Color("63")).
+		Foreground(lipgloss.Color("212"))
 
 	fmt.Println(
 		border.Render(
