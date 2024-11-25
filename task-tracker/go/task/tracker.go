@@ -53,6 +53,7 @@ func (t *Tracker) ListTasks(status string) {
 func (t *Tracker) AddTask(desc string) (int, error) {
 	task := NewTask(t.lastId+1, desc)
 	t.Tasks = append(t.Tasks, task)
+	t.lastId = task.Id
 
 	if err := t.saveTasks(); err != nil {
 		return 0, fmt.Errorf("AddTask(): %w", err)
