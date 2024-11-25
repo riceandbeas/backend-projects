@@ -24,7 +24,7 @@ type Tracker struct {
 func NewTracker() (*Tracker, error) {
 	tasks, err := loadTasks()
 	if err != nil {
-		return nil, fmt.Errorf("NewTracker(): %w", err)
+		return nil, fmt.Errorf("could not load tasks: %w", err)
 	}
 
 	lastId := 0
@@ -56,7 +56,7 @@ func (t *Tracker) AddTask(desc string) (int, error) {
 	t.lastId = task.Id
 
 	if err := t.saveTasks(); err != nil {
-		return 0, fmt.Errorf("AddTask(): %w", err)
+		return 0, fmt.Errorf("could not save tasks: %w", err)
 	}
 
 	return task.Id, nil
@@ -72,7 +72,7 @@ func (t *Tracker) UpdateTask(id int, desc string) error {
 	task.UpdatedAt = time.Now()
 
 	if err := t.saveTasks(); err != nil {
-		return fmt.Errorf("UpdateTask(): %w", err)
+		return fmt.Errorf("could not save tasks: %w", err)
 	}
 
 	return nil
@@ -88,7 +88,7 @@ func (t *Tracker) MarkInProgress(id int) error {
 	task.UpdatedAt = time.Now()
 
 	if err := t.saveTasks(); err != nil {
-		return fmt.Errorf("MarkInProgress(): %w", err)
+		return fmt.Errorf("could not save tasks: %w", err)
 	}
 
 	return nil
@@ -104,7 +104,7 @@ func (t *Tracker) MarkDone(id int) error {
 	task.UpdatedAt = time.Now()
 
 	if err := t.saveTasks(); err != nil {
-		return fmt.Errorf("MarkDone(): %w", err)
+		return fmt.Errorf("could not save tasks: %w", err)
 	}
 
 	return nil
@@ -126,7 +126,7 @@ func (t *Tracker) DeleteTask(id int) error {
 	t.Tasks = append(t.Tasks[:index], t.Tasks[index+1:]...)
 
 	if err := t.saveTasks(); err != nil {
-		return fmt.Errorf("DeleteTask(): %w", err)
+		return fmt.Errorf("could not save tasks: %w", err)
 	}
 
 	return nil
@@ -138,18 +138,18 @@ func loadTasks() ([]Task, error) {
 		if errors.Is(err, fs.ErrNotExist) {
 			return []Task{}, nil
 		}
-		return nil, fmt.Errorf("loadTasks(): os.Open(): %w", err)
+		return nil, fmt.Errorf("could not open file: %w", err)
 	}
 	defer f.Close()
 
 	contents, err := io.ReadAll(f)
 	if err != nil {
-		return nil, fmt.Errorf("loadTasks(): os.ReadFile(): %w", err)
+		return nil, fmt.Errorf("could not read file: %w", err)
 	}
 
 	tasks := make([]Task, 0)
 	if err := json.Unmarshal(contents, &tasks); err != nil {
-		return nil, fmt.Errorf("loadTasks(): json.Unmarshal(): %w", err)
+		return nil, fmt.Errorf("could not unmarshal contents: %w", err)
 	}
 
 	return tasks, nil
@@ -158,18 +158,18 @@ func loadTasks() ([]Task, error) {
 func (t *Tracker) saveTasks() error {
 	contents, err := json.MarshalIndent(t.Tasks, "", "  ")
 	if err != nil {
-		return fmt.Errorf("saveTasks(): json.MarshalIndent(): %w", err)
+		return fmt.Errorf("could not marshal indent: %w", err)
 	}
 
 	file, err := os.OpenFile(TaskFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
-		return fmt.Errorf("saveTasks(): os.OpenFile(): %w", err)
+		return fmt.Errorf("could not open file: %w", err)
 	}
 	defer file.Close()
 
 	_, err = file.Write(contents)
 	if err != nil {
-		return fmt.Errorf("saveTasks(): file.Write(): %w", err)
+		return fmt.Errorf("could not write file: %w", err)
 	}
 
 	return nil
