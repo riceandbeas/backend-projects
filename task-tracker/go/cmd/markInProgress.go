@@ -11,7 +11,7 @@ import (
 
 var markInProgressCmd = &cobra.Command{
 	Use:   "mark-in-progress",
-	Short: "marks the task as in progress",
+	Short: "Marks the task as in progress",
 	RunE: func(md *cobra.Command, args []string) error {
 		tracker, err := task.NewTracker()
 		if err != nil {

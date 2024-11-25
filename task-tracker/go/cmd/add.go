@@ -10,7 +10,7 @@ import (
 
 var addCmd = &cobra.Command{
 	Use:     "add",
-	Short:   "Adds a new task to your task list",
+	Short:   "Adds a new task",
 	Example: "Single word description: add study\nMulti-word description: add \"buy strawberries\"",
 	RunE: func(md *cobra.Command, args []string) error {
 		tracker, err := task.NewTracker()

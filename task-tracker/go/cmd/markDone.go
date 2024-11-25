@@ -11,7 +11,7 @@ import (
 
 var markDoneCmd = &cobra.Command{
 	Use:   "mark-done",
-	Short: "marks the task as done",
+	Short: "Marks the task as done",
 	RunE: func(md *cobra.Command, args []string) error {
 		tracker, err := task.NewTracker()
 		if err != nil {

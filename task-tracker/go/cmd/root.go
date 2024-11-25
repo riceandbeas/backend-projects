@@ -7,7 +7,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "taskcli",
+	Use:   "task-cli",
 	Short: "A CLI app to track your tasks and manage your to-do list",
 }
 
