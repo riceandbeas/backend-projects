@@ -35,6 +35,7 @@ Task tracker is a [roadmap.sh project](https://roadmap.sh/projects/task-tracker/
 
 Solutions are available in the following languages:
 - [Go](./go/)
+- [Java](./java/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
